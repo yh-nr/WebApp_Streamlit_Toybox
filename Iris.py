@@ -1,0 +1,78 @@
+# 基本ライブラリ
+import streamlit as st
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_iris
+from PIL import Image
+
+# データセット読み込み
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+# 目標値
+df['target'] = iris.target
+
+# 目標値を数字から花の名前に変更
+df.loc[df['target'] == 0, 'target'] = 'setosa'
+df.loc[df['target'] == 1, 'target'] = 'versicolor'
+df.loc[df['target'] == 2, 'target'] = 'virginica'
+
+# 予測モデル構築
+x = iris.data[:, :] 
+y = iris.target
+
+# ロジスティック回帰
+clf = LogisticRegression()
+clf.fit(x, y)
+
+
+# サイドバー（入力画面）
+st.sidebar.header('Input Features')
+sepalValue = st.sidebar.slider('sepal length (cm)', min_value=4.3, max_value=7.9, step=0.1)
+sepalWValue = st.sidebar.slider('sepal width (cm)', min_value=2.0, max_value=4.4, step=0.1)
+petalValue = st.sidebar.slider('petal length (cm)', min_value=1.0, max_value=6.9, step=0.1)
+petalWValue = st.sidebar.slider('petal width (cm)', min_value=0.1, max_value=2.5, step=0.1)
+
+# メインパネル
+st.title('Iris Classifier')
+st.write('## Input Value')
+
+# インプットデータ（1行のデータフレーム）
+value_df = pd.DataFrame([],columns=['data','sepal length (cm)','sepal width (cm)','petal length (cm)','petal width (cm)'])
+record = pd.Series(['data',sepalValue,sepalWValue, petalValue, petalWValue], index=value_df.columns)
+value_df = pd.concat([value_df, pd.DataFrame([record])], axis=0, ignore_index=True)
+value_df.set_index('data',inplace=True)
+
+# 入力値の値
+st.write(value_df)
+
+
+# 予測値のデータフレーム
+pred_probs = clf.predict_proba(value_df)
+pred_df = pd.DataFrame(pred_probs,columns=['setosa','versicolor','virginica'],index=['probability'])
+
+st.write('## Prediction')
+st.write(pred_df)
+
+# 予測結果の出力
+name = pred_df.idxmax(axis=1).tolist()
+st.write('## Result')
+st.write('このアイリスはきっと',str(name[0]),'です!')
+
+if name[0] == 'setosa':
+    img = Image.open('setosa.jpg')
+    st.image(img,caption = 'setosa' , width=360)
+
+
+if name[0] == 'versicolor':
+    img = Image.open('versicolor.jpg')
+    st.image(img,caption = 'versicolor' , width=360)
+
+
+if name[0] == 'virginica':
+    img = Image.open('virginica.jpg')
+    st.image(img,caption = 'virginica' , width=360)
+
+st.write('## Data set')
+st.write(df)
