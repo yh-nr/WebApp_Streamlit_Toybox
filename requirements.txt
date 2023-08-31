@@ -1,6 +1,2 @@
 streamlit
-numpy
-pandas
-# scikit-learn
-pillow
 pypdf
