@@ -1,6 +1,8 @@
 import streamlit as st
 import pypdf
 
+import pytesseract
+
 markdown = '''
 # PDFファイルから画像抽出
 ### 説明
@@ -55,6 +57,8 @@ if pdf_file is not None:
 
         # スライダーの値をsession_stateに保存
         st.session_state.slider_value = value
+
+        st.text(pytesseract.image_to_string(image_list[slider].image, lang='jpn'))
     
     else:
         st.warning("PDFファイルに画像がありません")
