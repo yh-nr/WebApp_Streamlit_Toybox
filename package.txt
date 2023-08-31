@@ -1,4 +1,2 @@
 tesseract-ocr
-libtesseract-dev
-libleptonica-dev
-pkg-config
+tesseract-ocr-jpn
