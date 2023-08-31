@@ -58,7 +58,7 @@ if pdf_file is not None:
         # スライダーの値をsession_stateに保存
         st.session_state.slider_value = value
 
-        st.text(pytesseract.image_to_string(image_list[slider].image, lang='jpn'))
+        st.text(pytesseract.image_to_string(image_list[slider].image, lang='en'))
     
     else:
         st.warning("PDFファイルに画像がありません")
