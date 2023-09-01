@@ -63,7 +63,8 @@ if pdf_file is not None:
         # スライダーの値をsession_stateに保存
         st.session_state.slider_value = value
 
-        txt = st.code('OCR結果',value=pytesseract.image_to_string(image_list[slider].image, lang=lang))
+        # txt = st.code('OCR結果',value=pytesseract.image_to_string(image_list[slider].image, lang=lang))
+        txt = st.code(pytesseract.image_to_string(image_list[slider].image, lang=lang))
     
     else:
         st.warning("PDFファイルに画像がありません")
