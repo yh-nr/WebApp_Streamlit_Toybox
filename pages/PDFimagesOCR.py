@@ -35,7 +35,7 @@ if pdf_file is not None:
     if len(image_list):
         # セッションの状態を初期化
 
-        st.text(f'このPDFには{len(image_list)}個の画像があります。')
+        st.markdown(f'### このPDFには{len(image_list)}個の画像があります。')
 
         if 'slider_value' not in st.session_state:
             st.session_state.slider_value = 0
