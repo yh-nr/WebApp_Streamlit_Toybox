@@ -4,7 +4,7 @@ import pypdf
 import pytesseract
 
 # ファイルを読み込む
-with open(r"docs/PDFimagesOCR.md", "r") as file:
+with open("docs/PDFimagesOCR.md", "r") as file:
     content = file.read()
 
 st.set_page_config(page_title='PDF内画像OCR')
