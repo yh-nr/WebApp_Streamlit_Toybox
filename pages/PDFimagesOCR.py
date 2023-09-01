@@ -4,7 +4,7 @@ import pypdf
 import pytesseract
 
 # ファイルを読み込む
-with open("PDFimagesOCR.md", "r") as file:
+with open(".pages\PDFimagesOCR.md", "r") as file:
     content = file.read()
 
 markdown = content
