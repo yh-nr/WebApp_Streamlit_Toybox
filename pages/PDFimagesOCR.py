@@ -7,10 +7,8 @@ import pytesseract
 with open(r"PDFimagesOCR.md", "r") as file:
     content = file.read()
 
-markdown = content
-
 st.set_page_config(page_title='PDF内画像OCR')
-st.markdown(markdown)
+st.markdown(content)
 
 pdf_file = st.file_uploader("ファイルをアップロード", type='pdf')
 
