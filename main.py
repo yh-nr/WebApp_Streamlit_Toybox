@@ -40,12 +40,12 @@ if pdf_file is not None:
 
         # ボタンを作成
         with col2:
-            if st.button("<<"):
+            if st.button("Prev"):
                 value -= 1
                 value = max(value, 0)  # 最小値は0に設定
 
         with col3:
-            if st.button("あいうえお", style="primary"):
+            if st.button("Next"):
                 value += 1
                 value = min(value, len(image_list)-1)  # 最大値は100に設定
 
