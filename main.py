@@ -3,12 +3,6 @@ import pypdf
 
 import pytesseract
 
-# ファイルを読み込む
-with open("PDFimagesOCR.rd", "r") as file:
-    content = file.read()
-
-markdown = content
-
 
 markdown = '''
 # PDFファイルから画像抽出
