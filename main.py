@@ -39,17 +39,17 @@ if pdf_file is not None:
 
 
         # ボタンを作成
-        with col1:
-            if st.button("Decrease"):
+        with col2:
+            if st.button("<"):
                 value -= 1
                 value = max(value, 0)  # 最小値は0に設定
 
         with col3:
-            if st.button("Increase"):
+            if st.button(">"):
                 value += 1
                 value = min(value, len(image_list)-1)  # 最大値は100に設定
 
-        with col2:
+        with col1:
             slider=st.slider("指定範囲", 0, len(image_list)-1, value)
 
         st.text(image_list[slider].name)
