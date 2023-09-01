@@ -22,6 +22,8 @@ if pdf_file is not None:
 
     pdf_reader = pypdf.PdfReader(pdf_file) 
     image_list = []
+    st.session_state.slider_value = 0
+
     for page in pdf_reader.pages:
         for image_file_object in page.images:
             image_list.append(image_file_object)
@@ -31,10 +33,11 @@ if pdf_file is not None:
         if 'slider_value' not in st.session_state:
             st.session_state.slider_value = 0
 
+
+
+
         # 列を作成
         col1, col2, col3 = st.columns([3,1,1])
-
-
         value = st.session_state.get("slider_value", 0)
 
 
