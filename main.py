@@ -32,7 +32,7 @@ if pdf_file is not None:
             st.session_state.slider_value = 0
 
         # 列を作成
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3 = st.columns([3,1,1])
 
 
         value = st.session_state.get("slider_value", 0)
