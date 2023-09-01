@@ -41,7 +41,7 @@ if pdf_file is not None:
         col1, col2, col3 = st.columns([3,1,1])
         value = st.session_state.get("slider_value", 0)
 
-        st.radio("こうする", ("hoge", "fuga", "piyo"), horizontal=True)
+        lang = st.radio("OCR言語", ("jpn", "eng"), horizontal=True)
 
         # ボタンを作成
         with col2:
@@ -63,7 +63,7 @@ if pdf_file is not None:
         # スライダーの値をsession_stateに保存
         st.session_state.slider_value = value
 
-        txt = st.text_area('OCR結果',value=pytesseract.image_to_string(image_list[slider].image, lang='jpn'))
+        txt = st.text_area('OCR結果',value=pytesseract.image_to_string(image_list[slider].image, lang=lang))
     
     else:
         st.warning("PDFファイルに画像がありません")
