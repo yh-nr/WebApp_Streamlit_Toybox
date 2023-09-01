@@ -27,7 +27,6 @@ if pdf_file is not None:
 
     pdf_reader = pypdf.PdfReader(pdf_file) 
     image_list = []
-    st.session_state.slider_value = 0
 
     for page in pdf_reader.pages:
         for image_file_object in page.images:
