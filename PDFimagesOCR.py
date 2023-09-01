@@ -4,18 +4,11 @@ import pypdf
 import pytesseract
 
 # ファイルを読み込む
-with open("PDFimagesOCR.rd", "r") as file:
+with open("PDFimagesOCR.md", "r") as file:
     content = file.read()
 
 markdown = content
 
-
-markdown = '''
-# PDFファイルから画像抽出
-### 説明
-* PDFファイルから画像を抽出して表示します。
-
-'''
 st.set_page_config(page_title='PDF内画像OCR')
 st.markdown(markdown)
 
