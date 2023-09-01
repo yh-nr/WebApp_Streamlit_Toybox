@@ -41,6 +41,7 @@ if pdf_file is not None:
         col1, col2, col3 = st.columns([3,1,1])
         value = st.session_state.get("slider_value", 0)
 
+        st.radio("こうする", ("hoge", "fuga", "piyo"), horizontal=True)
 
         # ボタンを作成
         with col2:
