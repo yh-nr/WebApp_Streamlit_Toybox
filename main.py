@@ -9,7 +9,7 @@ markdown = '''
 * PDFファイルから画像を抽出して表示します。
 
 '''
-
+st.set_page_config(page_title='PDF内画像OCR')
 st.markdown(markdown)
 
 pdf_file = st.file_uploader("ファイルをアップロード", type='pdf')
