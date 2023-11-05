@@ -28,13 +28,13 @@ if img_file is not None:
 
     lang = st.radio("OCR言語", ("jpn", "eng"), horizontal=True)
 
-    slider=st.slider("指定範囲", 0, len(image_list)-1, value)
+    # slider=st.slider("指定範囲", 0, len(image_list)-1, value)
 
     st.image(img_file)
 
     # スライダーの値をsession_stateに保存
-    value = st.session_state.get("slider_value", 0)
-    st.session_state.slider_value = value
+    # value = st.session_state.get("slider_value", 0)
+    # st.session_state.slider_value = value
 
     # txt = st.code('OCR結果',value=pytesseract.image_to_string(image_list[slider].image, lang=lang))
     txt = st.code(pytesseract.image_to_string(img_file, lang=lang))
