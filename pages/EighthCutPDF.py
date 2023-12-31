@@ -88,6 +88,12 @@ if pdf_file is not None:
         # Split the image and save the pieces
         split_images.extend(split_image(img, grid_size))
 
+        
+        # Streamlitで画像を表示
+        st.image(split_images[0], caption="PDFの1ページ目", use_column_width=True)
+
+
+
     # 変換後の画像をバイト列に変換
     buf = io.BytesIO()
     split_images[0].save(buf, format="PDF", quality=100, save_all=True, append_images=split_images[1:], optimize=True)
