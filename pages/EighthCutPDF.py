@@ -13,6 +13,8 @@ with open("docs/EighthCutPDF.md", "r") as file:
 st.set_page_config(page_title='EighthCutPDF (PDFを八つ折りサイズに分割)')
 st.markdown(content)
 
+selected_angle = st.radio('角度補正', [0,90,180,270])
+
 pdf_file = st.file_uploader("ファイルをアップロード", type=['pdf'])
 
 
@@ -53,6 +55,11 @@ if pdf_file is not None:
         # Define the grid size for splitting (4 columns x 2 rows)
         grid_size = (2, 4)
         img_width, img_height = img.size
+
+        # 補正角度の設定があれば補正する
+        if selected_angle !=0:
+            img = img.rotate(selected_angle, expand=True)
+            img_width, img_height = img.size
 
         # もし横長であれば、縦長に変換する。
         if img_width > img_height:
