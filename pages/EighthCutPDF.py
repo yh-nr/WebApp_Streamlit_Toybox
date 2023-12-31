@@ -29,6 +29,7 @@ if st.session_state.last_uploaded_file != pdf_file:
 if pdf_file is not None:
 
     pdf_file_name = pdf_file.name
+    name_without_extension = os.path.splitext(pdf_file_name)[0]
 
     dpi = 300
 
@@ -97,7 +98,7 @@ if pdf_file is not None:
     st.download_button(
         label="変換後の画像をダウンロード",
         data=byte_pdf,
-        file_name=f"{pdf_file_name}_8cut.pdf",
+        file_name=f"{name_without_extension}_8cut.pdf",
         mime="application/octet-stream" 
     )
 
