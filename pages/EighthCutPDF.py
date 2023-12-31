@@ -15,6 +15,8 @@ st.markdown(content)
 
 pdf_file = st.file_uploader("ファイルをアップロード", type=['pdf'])
 
+
+
 # 新しいファイルがアップロードされたかどうかの状態を持つ
 if 'last_uploaded_file' not in st.session_state:
     st.session_state.last_uploaded_file = None
@@ -26,18 +28,12 @@ if st.session_state.last_uploaded_file != pdf_file:
 
 if pdf_file is not None:
 
-    dpi = 300
-    
-    # ファイルパスからディレクトリパスとファイル名を取得
-    # dir_path, file_name = os.path.split(pdf_file)
+    pdf_file_name = pdf_file.name
 
-    # 拡張子が.pdfの場合のみ処理を実行
-    # if os.path.splitext(file_name)[1].lower() == '.pdf':
+    dpi = 300
 
     # PDFを読み込み
-    # reader = PdfReader(pdf_file)
     doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
-    # doc = fitz.open(stream=pdf_file.read())
 
     # PDFのページ毎に処理
     split_images = []
@@ -101,7 +97,7 @@ if pdf_file is not None:
     st.download_button(
         label="変換後の画像をダウンロード",
         data=byte_pdf,
-        file_name="converted_image.pdf",
+        file_name=f"{pdf_file_name}_8cut.pdf",
         mime="application/octet-stream" 
     )
 
