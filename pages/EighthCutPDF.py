@@ -36,73 +36,74 @@ if pdf_file is not None:
 
     # PDFを読み込み
     reader = PdfReader(pdf_file)
-    doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
-
-    # PDFのページ毎に処理
-    split_images = []
-    for page_number in range(len(doc)):
-
-        # PDFページの寸法を取得
-        page = doc[page_number]
-        rect = page.rect
+    with fitz.open(stream=pdf_file.read(), filetype="pdf") as doc:
         
-        # DPIを設定 (デフォルトを150とする)
-        pixmap = page.get_pixmap(matrix=fitz.Matrix(dpi / 72, dpi / 72))
-        
-        # ページを新しいJPEGファイルとして保存
-        img = Image.frombytes("RGB", [pixmap.width, pixmap.height], pixmap.samples)
 
-        # Define the grid size for splitting (4 columns x 2 rows)
-        grid_size = (2, 4)
-        img_width, img_height = img.size
+        # PDFのページ毎に処理
+        split_images = []
+        for page_number in range(len(doc)):
 
-        # もし横長であれば、縦長に変換する。
-        if img_width > img_height:
-            img = img.rotate(270, expand=True)
+            # PDFページの寸法を取得
+            page = doc[page_number]
+            rect = page.rect
+            
+            # DPIを設定 (デフォルトを150とする)
+            pixmap = page.get_pixmap(matrix=fitz.Matrix(dpi / 72, dpi / 72))
+            
+            # ページを新しいJPEGファイルとして保存
+            img = Image.frombytes("RGB", [pixmap.width, pixmap.height], pixmap.samples)
+
+            # Define the grid size for splitting (4 columns x 2 rows)
+            grid_size = (2, 4)
             img_width, img_height = img.size
 
-        # Width and height of each split
-        split_width = img_width // grid_size[0]
-        split_height = img_height // grid_size[1]
+            # もし横長であれば、縦長に変換する。
+            if img_width > img_height:
+                img = img.rotate(270, expand=True)
+                img_width, img_height = img.size
 
-        # Function to split the image
-        def split_image(image, grid):
-            row_images = []
-            for col in range(grid[0]):
-                col_images = []
-                for row in range(grid[1]):
-                    left = (grid[0] - col -1) * split_width
-                    upper = (row) * split_height
-                    # left = (col) * split_width
-                    # upper = (row) * split_height
-                    right = left + split_width
-                    lower = upper + split_height
+            # Width and height of each split
+            split_width = img_width // grid_size[0]
+            split_height = img_height // grid_size[1]
 
-                    print(f'left:{left}upper:{upper}right:{right}lower:{lower}')
+            # Function to split the image
+            def split_image(image, grid):
+                row_images = []
+                for col in range(grid[0]):
+                    col_images = []
+                    for row in range(grid[1]):
+                        left = (grid[0] - col -1) * split_width
+                        upper = (row) * split_height
+                        # left = (col) * split_width
+                        # upper = (row) * split_height
+                        right = left + split_width
+                        lower = upper + split_height
 
-                    bbox = (left, upper, right, lower)
-                    split_img = image.crop(bbox)
-                    split_img_rotated = split_img.rotate(90, expand=True)
-                    col_images.append(split_img_rotated)
-                row_images.extend(col_images)
-            return row_images
+                        print(f'left:{left}upper:{upper}right:{right}lower:{lower}')
 
-        # Split the image and save the pieces
-        split_images.extend(split_image(img, grid_size))
+                        bbox = (left, upper, right, lower)
+                        split_img = image.crop(bbox)
+                        split_img_rotated = split_img.rotate(90, expand=True)
+                        col_images.append(split_img_rotated)
+                    row_images.extend(col_images)
+                return row_images
 
-    # 変換後の画像をバイト列に変換
-    buf = io.BytesIO()
-    split_images[0].save(buf, format="PDF", quality=100, save_all=True, append_images=split_images[1:], optimize=True)
-    byte_pdf = buf.getvalue()
-    doc.close()
+            # Split the image and save the pieces
+            split_images.extend(split_image(img, grid_size))
 
-        # ダウンロードボタンを作成
-    st.download_button(
-        label="変換後の画像をダウンロード",
-        data=byte_pdf,
-        file_name="converted_image.pdf",
-        mime="application/octet-stream" 
-    )
+        # 変換後の画像をバイト列に変換
+        buf = io.BytesIO()
+        split_images[0].save(buf, format="PDF", quality=100, save_all=True, append_images=split_images[1:], optimize=True)
+        byte_pdf = buf.getvalue()
+        doc.close()
+
+            # ダウンロードボタンを作成
+        st.download_button(
+            label="変換後の画像をダウンロード",
+            data=byte_pdf,
+            file_name="converted_image.pdf",
+            mime="application/octet-stream" 
+        )
 
 else:
     st.warning("PDFファイルをアップロードして下さい")
