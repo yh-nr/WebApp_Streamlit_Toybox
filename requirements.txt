@@ -2,5 +2,4 @@ streamlit
 pypdf
 pytesseract
 pillow
-pymupdf
-fitz
+PyMuPDF
