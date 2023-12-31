@@ -89,8 +89,8 @@ if pdf_file is not None:
         split_images.extend(split_image(img, grid_size))
 
         
-        # Streamlitで画像を表示
-        st.image(split_images[0], caption="PDFの1ページ目", use_column_width=True)
+    # Streamlitで画像を表示
+    st.image(split_images[0], caption="PDFの1ページ目", use_column_width=True)
 
 
 
