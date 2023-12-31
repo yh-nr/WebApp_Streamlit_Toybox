@@ -13,7 +13,7 @@ with open("docs/EighthCutPDF.md", "r") as file:
 st.set_page_config(page_title='EighthCutPDF (PDFを八つ折りサイズに分割)')
 st.markdown(content)
 
-pdf_file = st.file_uploader("ファイルをアップロード", type='pdf')
+pdf_file = st.file_uploader("ファイルをアップロード", type=['pdf'])
 
 # 新しいファイルがアップロードされたかどうかの状態を持つ
 if 'last_uploaded_file' not in st.session_state:
