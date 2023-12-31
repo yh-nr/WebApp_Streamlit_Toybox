@@ -36,7 +36,7 @@ if pdf_file is not None:
 
     # PDFを読み込み
     reader = PdfReader(pdf_file)
-    doc = fitz.open(pdf_file)
+    doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
 
     # PDFのページ毎に処理
     split_images = []
@@ -94,6 +94,7 @@ if pdf_file is not None:
     buf = io.BytesIO()
     split_images[0].save(buf, format="PDF", quality=100, save_all=True, append_images=split_images[1:], optimize=True)
     byte_pdf = buf.getvalue()
+    doc.close()
 
         # ダウンロードボタンを作成
     st.download_button(
