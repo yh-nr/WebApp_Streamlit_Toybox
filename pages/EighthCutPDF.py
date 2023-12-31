@@ -36,7 +36,8 @@ if pdf_file is not None:
 
     # PDFを読み込み
     reader = PdfReader(pdf_file)
-    doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
+    # doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
+    doc = fitz.open(stream=pdf_file.read())
 
     # PDFのページ毎に処理
     split_images = []
